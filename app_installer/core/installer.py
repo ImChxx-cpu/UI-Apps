@@ -4,6 +4,13 @@ from typing import List, Dict
 from datetime import datetime
 from dataclasses import dataclass
 
+# Intentar importar rich.progress si está disponible
+try:
+    from rich.progress import Progress
+    _RICH_AVAILABLE = True
+except Exception:  # pragma: no cover - optional dependency
+    _RICH_AVAILABLE = False
+
 
 @dataclass
 class InstallResult:
@@ -18,6 +25,7 @@ class InstallResult:
     @property
     def duration(self) -> float:
         return (self.end - self.start).total_seconds()
+
 
 LOG_PATH = Path(__file__).resolve().parent.parent / 'logs' / 'install.log'
 
@@ -36,40 +44,80 @@ def log(message: str):
         f.write(f"{datetime.now().isoformat()} - {message}\n")
 
 
-def install_app(app: Dict[str, str]) -> InstallResult:
+def install_app(app: Dict[str, str], interactive: bool = False) -> InstallResult:
+    """
+    Instala una aplicación usando winget.
+
+    Si `interactive` es True, permite interacción en terminal y no captura salida.
+    De lo contrario, se usa instalación silenciosa y se capturan stdout/stderr.
+    """
     start = datetime.now()
     cmd = [
         'winget',
         'install',
         '--id',
         app['id'],
-        '--silent',
+    ]
+
+    if not interactive:
+        cmd.append('--silent')
+    cmd.extend([
         '--accept-package-agreements',
         '--accept-source-agreements',
-    ]
-    proc = subprocess.run(cmd, capture_output=True, text=True)
+    ])
+
+    if interactive:
+        proc = subprocess.run(cmd, text=True)
+        stdout = proc.stdout or ''
+        stderr = proc.stderr or ''
+    else:
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+        stdout = proc.stdout
+        stderr = proc.stderr
+
     end = datetime.now()
 
     log(f"Installed {app['id']}: {proc.returncode}")
-    if proc.stdout:
-        log(proc.stdout)
-    if proc.stderr:
-        log(proc.stderr)
+    if stdout:
+        log(stdout)
+    if stderr:
+        log(stderr)
 
     return InstallResult(
         name=app.get('name', ''),
         id=app['id'],
         returncode=proc.returncode,
-        stdout=proc.stdout,
-        stderr=proc.stderr,
+        stdout=stdout,
+        stderr=stderr,
         start=start,
         end=end,
     )
 
 
-def install_apps(apps: List[Dict[str, str]]) -> List[InstallResult]:
+def install_apps(
+    apps: List[Dict[str, str]],
+    show_progress: bool = False,
+    interactive: bool = False,
+) -> List[InstallResult]:
+    """
+    Instala múltiples aplicaciones. Si show_progress es True y rich está disponible,
+    se muestra una barra de progreso.
+    """
     results: List[InstallResult] = []
-    for app in apps:
-        result = install_app(app)
-        results.append(result)
+
+    if show_progress and _RICH_AVAILABLE:
+        with Progress() as progress:
+            task = progress.add_task("Instalando", total=len(apps))
+            for app in apps:
+                progress.update(task, description=f"Instalando {app.get('name', app['id'])}")
+                result = install_app(app, interactive=interactive)
+                results.append(result)
+                progress.advance(task)
+    else:
+        for idx, app in enumerate(apps, start=1):
+            if show_progress:
+                print(f"[{idx}/{len(apps)}] Instalando {app.get('name', app['id'])}")
+            result = install_app(app, interactive=interactive)
+            results.append(result)
+
     return results

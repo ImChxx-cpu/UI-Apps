@@ -99,7 +99,7 @@ class AppInstallerUI(ctk.CTk):
 
     def _install_thread(self, apps):
         self.status.insert('end', 'Iniciando instalación...\n')
-        results = installer.install_apps(apps)
+        results = installer.install_apps(apps, show_progress=False)
         for res in results:
             marker = '🟢' if res.returncode == 0 else '🔴'
             self.status.insert('end', f"{marker} {res.name} ({res.id})\n")
