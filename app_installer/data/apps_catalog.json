@@ -1,0 +1,14 @@
+{
+  "Browsers": [
+    {"name": "Google Chrome", "id": "Google.Chrome"},
+    {"name": "Mozilla Firefox", "id": "Mozilla.Firefox"}
+  ],
+  "Development": [
+    {"name": "Visual Studio Code", "id": "Microsoft.VisualStudioCode"},
+    {"name": "Git", "id": "Git.Git"}
+  ],
+  "Productivity": [
+    {"name": "7zip", "id": "7zip.7zip"},
+    {"name": "Notepad++", "id": "Notepad++.Notepad++"}
+  ]
+}
