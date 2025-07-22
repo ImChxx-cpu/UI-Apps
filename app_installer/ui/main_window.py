@@ -69,6 +69,8 @@ class AppInstallerUI(ctk.CTk):
         self.progress = ctk.CTkProgressBar(bottom_frame)
         self.progress.set(0)
         self.progress.grid(row=3, column=0, sticky="ew", pady=5)
+        # hide progress bar until installation starts
+        self.progress.grid_remove()
 
         self.result_msg = ctk.CTkLabel(bottom_frame, text="")
         self.result_msg.grid(row=4, column=0, sticky="ew")
@@ -107,6 +109,7 @@ class AppInstallerUI(ctk.CTk):
         if not installer.is_winget_available():
             messagebox.showerror('Error', 'winget no está disponible')
             return
+        self.progress.grid()
         self.progress.set(0)
         self.current_pkg.configure(text="")
         self.result_msg.configure(text="")
@@ -129,6 +132,8 @@ class AppInstallerUI(ctk.CTk):
         self.after(0, lambda: self.status.insert('end', 'Instalación finalizada\n'))
         self.after(0, lambda: self.current_pkg.configure(text=''))
         self.after(0, lambda: self.result_msg.configure(text=msg, text_color=color))
+        # hide progress bar when installation finishes
+        self.after(0, self.progress.grid_remove)
 
     def _log_result(self, res):
         marker = '🟢' if res.returncode == 0 else '🔴'
