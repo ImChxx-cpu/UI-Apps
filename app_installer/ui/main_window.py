@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Dict, List
 
 from app_installer.core import installer, file_manager, scanner
+from .settings_window import SettingsWindow
 
 CATALOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'apps_catalog.json'
 
@@ -51,13 +52,11 @@ class AppInstallerUI(ctk.CTk):
 
         button_frame = ctk.CTkFrame(bottom_frame)
         button_frame.grid(row=0, column=0, sticky="ew")
-        for i in range(4):
+        for i in range(2):
             button_frame.grid_columnconfigure(i, weight=1)
 
         ctk.CTkButton(button_frame, text="Instalar", command=self.install_selected).grid(row=0, column=0, padx=5, pady=5)
-        ctk.CTkButton(button_frame, text="Exportar", command=self.export_selected).grid(row=0, column=1, padx=5, pady=5)
-        ctk.CTkButton(button_frame, text="Importar", command=self.import_list).grid(row=0, column=2, padx=5, pady=5)
-        ctk.CTkButton(button_frame, text="Escanear", command=self.scan_system).grid(row=0, column=3, padx=5, pady=5)
+        ctk.CTkButton(button_frame, text="Configuraci\u00f3n", command=self.open_settings).grid(row=0, column=1, padx=5, pady=5)
 
         self.status = ctk.CTkTextbox(bottom_frame, height=120)
         self.status.grid(row=1, column=0, sticky="nsew")
@@ -137,6 +136,18 @@ class AppInstallerUI(ctk.CTk):
         file_manager.save_backup(Path(path), apps)
         messagebox.showinfo('Info', 'Respaldo guardado')
 
+    def open_settings(self):
+        win = SettingsWindow(self)
+        win.grab_set()
+        win.protocol('WM_DELETE_WINDOW', lambda w=win: self._close_settings(w))
+
+    def _close_settings(self, win):
+        win.destroy()
+        self.reload_catalog()
+
+    def reload_catalog(self):
+        self.catalog = file_manager.load_catalog(CATALOG_PATH)
+        self.refresh_app_list()
 
 def main():
     app = AppInstallerUI()
