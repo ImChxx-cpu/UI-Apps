@@ -7,6 +7,7 @@
   "CTkFrame": {
     "fg_color": ["#e0e5ec", "#e0e5ec"],
     "border_color": ["#d4d9e2", "#d4d9e2"],
+    "border_width": 1,
     "corner_radius": 15
   },
   "CTkButton": {
