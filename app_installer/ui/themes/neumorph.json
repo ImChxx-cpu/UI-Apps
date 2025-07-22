@@ -21,6 +21,31 @@
     "border_color": ["#d4d9e2", "#d4d9e2"],
     "text_color": ["#333333", "#333333"],
     "corner_radius": 10
+  },
+  "CTkLabel": {
+    "fg_color": ["transparent", "transparent"],
+    "text_color": ["#555555", "#555555"]
+  },
+  "CTkCheckBox": {
+    "fg_color": ["#e0e5ec", "#e0e5ec"],
+    "border_color": ["#d4d9e2", "#d4d9e2"],
+    "hover_color": ["#d4d9e2", "#d4d9e2"],
+    "text_color": ["#333333", "#333333"],
+    "checkmark_color": ["#555555", "#555555"],
+    "corner_radius": 6,
+    "border_width": 1
+  },
+  "CTkScrollableFrame": {
+    "fg_color": ["#e0e5ec", "#e0e5ec"],
+    "border_color": ["#d4d9e2", "#d4d9e2"],
+    "corner_radius": 15
+  },
+  "CTkTextbox": {
+    "fg_color": ["#e0e5ec", "#e0e5ec"],
+    "border_color": ["#d4d9e2", "#d4d9e2"],
+    "text_color": ["#333333", "#333333"],
+    "corner_radius": 15,
+    "border_width": 1
   }
 }
 
