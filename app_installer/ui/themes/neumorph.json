@@ -5,7 +5,9 @@
     "button_hover_color": ["#d4d9e2", "#d4d9e2"]
   },
   "CTkFrame": {
-    "fg_color": ["#e0e5ec", "#e0e5ec"]
+    "fg_color": ["#e0e5ec", "#e0e5ec"],
+    "border_color": ["#d4d9e2", "#d4d9e2"],
+    "corner_radius": 15
   },
   "CTkButton": {
     "fg_color": ["#e0e5ec", "#e0e5ec"],
