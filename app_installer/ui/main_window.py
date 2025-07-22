@@ -1,6 +1,8 @@
 import threading
 import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
+from tkinter import filedialog, messagebox
+
+import customtkinter as ctk
 from pathlib import Path
 from typing import Dict, List
 
@@ -10,53 +12,73 @@ CATALOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'apps_catalog.j
 
 
 narrow = 40
-class AppInstallerUI(tk.Tk):
+
+
+class AppInstallerUI(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title('Winget App Installer')
-        self.geometry('600x500')
+        ctk.set_appearance_mode("system")
+        ctk.set_default_color_theme("dark-blue")
+        self.title("Winget App Installer")
+        self.geometry("800x600")
         self.catalog = file_manager.load_catalog(CATALOG_PATH)
         self.selected_apps: List[Dict[str, str]] = []
         self.create_widgets()
 
     def create_widgets(self):
         self.search_var = tk.StringVar()
-        search_frame = ttk.Frame(self)
-        search_frame.pack(fill='x', padx=5, pady=5)
-        ttk.Label(search_frame, text='Buscar:').pack(side='left')
-        search_entry = ttk.Entry(search_frame, textvariable=self.search_var)
-        search_entry.pack(side='left', fill='x', expand=True)
-        search_entry.bind('<KeyRelease>', lambda e: self.refresh_app_list())
 
-        self.app_frame = ttk.Frame(self)
-        self.app_frame.pack(fill='both', expand=True)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=1)
 
-        button_frame = ttk.Frame(self)
-        button_frame.pack(fill='x')
-        ttk.Button(button_frame, text='Instalar', command=self.install_selected).pack(side='left', padx=5, pady=5)
-        ttk.Button(button_frame, text='Exportar', command=self.export_selected).pack(side='left', padx=5, pady=5)
-        ttk.Button(button_frame, text='Importar', command=self.import_list).pack(side='left', padx=5, pady=5)
-        ttk.Button(button_frame, text='Escanear', command=self.scan_system).pack(side='left', padx=5, pady=5)
+        top_frame = ctk.CTkFrame(self)
+        top_frame.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
+        top_frame.grid_columnconfigure(1, weight=1)
 
-        self.status = tk.Text(self, height=8)
-        self.status.pack(fill='x', padx=5, pady=5)
+        ctk.CTkLabel(top_frame, text="Buscar:").grid(row=0, column=0, padx=(0, 5))
+        search_entry = ctk.CTkEntry(top_frame, textvariable=self.search_var)
+        search_entry.grid(row=0, column=1, sticky="ew")
+        search_entry.bind("<KeyRelease>", lambda e: self.refresh_app_list())
+
+        self.app_scroll = ctk.CTkScrollableFrame(self)
+        self.app_scroll.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+        self.app_scroll.grid_columnconfigure(0, weight=1)
+
+        bottom_frame = ctk.CTkFrame(self)
+        bottom_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+        bottom_frame.grid_columnconfigure(0, weight=1)
+        bottom_frame.grid_rowconfigure(1, weight=1)
+
+        button_frame = ctk.CTkFrame(bottom_frame)
+        button_frame.grid(row=0, column=0, sticky="ew")
+        for i in range(4):
+            button_frame.grid_columnconfigure(i, weight=1)
+
+        ctk.CTkButton(button_frame, text="Instalar", command=self.install_selected).grid(row=0, column=0, padx=5, pady=5)
+        ctk.CTkButton(button_frame, text="Exportar", command=self.export_selected).grid(row=0, column=1, padx=5, pady=5)
+        ctk.CTkButton(button_frame, text="Importar", command=self.import_list).grid(row=0, column=2, padx=5, pady=5)
+        ctk.CTkButton(button_frame, text="Escanear", command=self.scan_system).grid(row=0, column=3, padx=5, pady=5)
+
+        self.status = ctk.CTkTextbox(bottom_frame, height=120)
+        self.status.grid(row=1, column=0, sticky="nsew")
 
         self.refresh_app_list()
 
     def refresh_app_list(self):
-        for widget in self.app_frame.winfo_children():
+        for widget in self.app_scroll.winfo_children():
             widget.destroy()
         search = self.search_var.get().lower()
         self.check_vars = {}
         for category, apps in self.catalog.items():
-            cat_frame = ttk.LabelFrame(self.app_frame, text=category)
-            cat_frame.pack(fill='x', padx=5, pady=5)
+            cat_frame = ctk.CTkFrame(self.app_scroll)
+            cat_frame.pack(fill="x", padx=5, pady=5)
+            ctk.CTkLabel(cat_frame, text=category, font=ctk.CTkFont(weight="bold")).pack(anchor="w", pady=(0, 2))
             for app in apps:
                 if search and search not in app['name'].lower():
                     continue
                 var = tk.BooleanVar()
-                chk = ttk.Checkbutton(cat_frame, text=app['name'], variable=var)
-                chk.pack(anchor='w')
+                chk = ctk.CTkCheckBox(cat_frame, text=app['name'], variable=var)
+                chk.pack(anchor="w")
                 self.check_vars[app['id']] = (var, app)
 
     def gather_selection(self) -> List[Dict[str, str]]:
