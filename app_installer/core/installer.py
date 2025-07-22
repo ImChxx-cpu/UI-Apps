@@ -4,6 +4,12 @@ from typing import List, Dict
 from datetime import datetime
 from dataclasses import dataclass
 
+try:
+    from rich.progress import Progress
+    _RICH_AVAILABLE = True
+except Exception:  # pragma: no cover - optional dependency
+    _RICH_AVAILABLE = False
+
 
 @dataclass
 class InstallResult:
@@ -67,9 +73,24 @@ def install_app(app: Dict[str, str]) -> InstallResult:
     )
 
 
-def install_apps(apps: List[Dict[str, str]]) -> List[InstallResult]:
+def install_apps(apps: List[Dict[str, str]], show_progress: bool = False) -> List[InstallResult]:
+    """Install multiple apps optionally showing a progress bar."""
+
     results: List[InstallResult] = []
-    for app in apps:
-        result = install_app(app)
-        results.append(result)
+
+    if show_progress and _RICH_AVAILABLE:
+        with Progress() as progress:
+            task = progress.add_task("Instalando", total=len(apps))
+            for app in apps:
+                progress.update(task, description=f"Instalando {app.get('name', app['id'])}")
+                result = install_app(app)
+                results.append(result)
+                progress.advance(task)
+    else:
+        for idx, app in enumerate(apps, start=1):
+            if show_progress:
+                print(f"[{idx}/{len(apps)}] Instalando {app.get('name', app['id'])}")
+            result = install_app(app)
+            results.append(result)
+
     return results
