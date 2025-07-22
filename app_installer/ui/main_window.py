@@ -6,7 +6,7 @@ import customtkinter as ctk
 from pathlib import Path
 from typing import Dict, List
 
-from .components.neumorph import NeumorphButton, apply_neumorph_style
+
 
 from app_installer.core import installer, file_manager, scanner
 from .settings_window import SettingsWindow
@@ -17,10 +17,8 @@ CATALOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'apps_catalog.j
 class AppInstallerUI(ctk.CTk):
     def __init__(self):
         super().__init__()
-        ctk.set_appearance_mode("light")
-        theme_path = Path(__file__).resolve().parent / "themes" / "neumorph.json"
-        ctk.set_default_color_theme(str(theme_path))
-        self.configure(fg_color="#e0e5ec")
+        ctk.set_appearance_mode("system")
+        ctk.set_default_color_theme("dark-blue")
         self.title("Winget App Installer")
         self.geometry("800x600")
         self.catalog = file_manager.load_catalog(CATALOG_PATH)
@@ -31,23 +29,19 @@ class AppInstallerUI(ctk.CTk):
         self.search_var = tk.StringVar()
 
         top_frame = ctk.CTkFrame(self)
-        apply_neumorph_style(top_frame)
         top_frame.pack(fill="x", padx=10, pady=10)
         top_frame.grid_columnconfigure(1, weight=1)
 
         ctk.CTkLabel(top_frame, text="Buscar:").grid(row=0, column=0, padx=(0, 5))
         search_entry = ctk.CTkEntry(top_frame, textvariable=self.search_var)
-        apply_neumorph_style(search_entry)
         search_entry.grid(row=0, column=1, sticky="ew")
         search_entry.bind("<KeyRelease>", lambda e: self.refresh_app_list())
 
         self.app_scroll = ctk.CTkScrollableFrame(self)
-        apply_neumorph_style(self.app_scroll)
         self.app_scroll.pack(fill="both", expand=True, padx=10, pady=10)
         self.app_scroll.grid_columnconfigure(0, weight=1)
 
         bottom_frame = ctk.CTkFrame(self)
-        apply_neumorph_style(bottom_frame)
         bottom_frame.pack(fill="x", padx=10, pady=10)
         bottom_frame.grid_columnconfigure(0, weight=1)
         bottom_frame.grid_rowconfigure(1, weight=1)
@@ -55,24 +49,20 @@ class AppInstallerUI(ctk.CTk):
             bottom_frame.grid_rowconfigure(r, weight=0)
 
         button_frame = ctk.CTkFrame(bottom_frame)
-        apply_neumorph_style(button_frame)
         button_frame.grid(row=0, column=0, sticky="ew")
         for i in range(2):
             button_frame.grid_columnconfigure(i, weight=1)
 
-        NeumorphButton(button_frame, text="Instalar", command=self.install_selected).grid(row=0, column=0, padx=5, pady=5)
-        NeumorphButton(button_frame, text="Configuraci\u00f3n", command=self.open_settings).grid(row=0, column=1, padx=5, pady=5)
+        ctk.CTkButton(button_frame, text="Instalar", command=self.install_selected).grid(row=0, column=0, padx=5, pady=5)
+        ctk.CTkButton(button_frame, text="Configuraci\u00f3n", command=self.open_settings).grid(row=0, column=1, padx=5, pady=5)
 
         self.status = ctk.CTkTextbox(bottom_frame, height=120)
-        apply_neumorph_style(self.status)
         self.status.grid(row=1, column=0, sticky="nsew")
 
         self.current_pkg = ctk.CTkLabel(bottom_frame, text="")
-        apply_neumorph_style(self.current_pkg)
         self.current_pkg.grid(row=2, column=0, sticky="ew", pady=(5, 0))
 
         self.result_msg = ctk.CTkLabel(bottom_frame, text="")
-        apply_neumorph_style(self.result_msg)
         self.result_msg.grid(row=3, column=0, sticky="ew", pady=5)
 
         self.refresh_app_list()
@@ -84,7 +74,6 @@ class AppInstallerUI(ctk.CTk):
         self.check_vars = {}
         for category, apps in self.catalog.items():
             cat_frame = ctk.CTkFrame(self.app_scroll)
-            apply_neumorph_style(cat_frame)
             cat_frame.pack(fill="x", padx=5, pady=5)
             ctk.CTkLabel(cat_frame, text=category, font=ctk.CTkFont(weight="bold")).pack(anchor="w", pady=(0, 2))
             for app in apps:
@@ -92,7 +81,6 @@ class AppInstallerUI(ctk.CTk):
                     continue
                 var = tk.BooleanVar()
                 chk = ctk.CTkCheckBox(cat_frame, text=app['name'], variable=var)
-                apply_neumorph_style(chk)
                 chk.pack(anchor="w")
                 self.check_vars[app['id']] = (var, app)
 
