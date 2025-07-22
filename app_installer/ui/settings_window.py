@@ -1,6 +1,5 @@
 import json
 import customtkinter as ctk
-from .components.neumorph import NeumorphButton, apply_neumorph_style
 from pathlib import Path
 
 CATALOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'apps_catalog.json'
@@ -12,14 +11,11 @@ class SettingsWindow(ctk.CTkToplevel):
         super().__init__(master)
         self.title('Configuraci\u00f3n')
         self.geometry('600x500')
-        self.configure(fg_color="#e0e5ec")
         self.text = ctk.CTkTextbox(self)
-        apply_neumorph_style(self.text)
         self.text.pack(fill='both', expand=True, padx=10, pady=(10, 5))
         self.status = ctk.CTkLabel(self, text='')
-        apply_neumorph_style(self.status)
         self.status.pack(fill='x', padx=10)
-        self.restore_btn = NeumorphButton(self, text='Restaurar por defecto', command=self.restore_default)
+        self.restore_btn = ctk.CTkButton(self, text='Restaurar por defecto', command=self.restore_default)
         self.restore_btn.pack(pady=5)
         self.load_content()
         self.text.bind('<KeyRelease>', self.validate_and_save)
