@@ -101,7 +101,13 @@ class AppInstallerUI(ctk.CTk):
         self.status.insert('end', 'Iniciando instalación...\n')
         results = installer.install_apps(apps)
         for res in results:
-            self.status.insert('end', f"{res.args[3]} -> {res.returncode}\n")
+            marker = '🟢' if res.returncode == 0 else '🔴'
+            self.status.insert('end', f"{marker} {res.name} ({res.id})\n")
+            self.status.insert('end', f"Inicio: {res.start.strftime('%Y-%m-%d %H:%M:%S')}\n")
+            self.status.insert('end', f"Duración: {res.duration:.1f}s\n")
+            if res.stderr and res.returncode != 0:
+                self.status.insert('end', res.stderr.strip() + '\n')
+            self.status.insert('end', '─────────────────────\n')
         self.status.insert('end', 'Instalación finalizada\n')
 
     def export_selected(self):
