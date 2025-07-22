@@ -15,6 +15,7 @@ class AppInstallerUI(tk.Tk):
         super().__init__()
         self.title('Winget App Installer')
         self.geometry('600x500')
+        self.minsize(500, 400)
         self.catalog = file_manager.load_catalog(CATALOG_PATH)
         self.selected_apps: List[Dict[str, str]] = []
         self.create_widgets()
@@ -28,8 +29,25 @@ class AppInstallerUI(tk.Tk):
         search_entry.pack(side='left', fill='x', expand=True)
         search_entry.bind('<KeyRelease>', lambda e: self.refresh_app_list())
 
-        self.app_frame = ttk.Frame(self)
-        self.app_frame.pack(fill='both', expand=True)
+        list_container = ttk.Frame(self)
+        list_container.pack(fill='both', expand=True, padx=5, pady=5)
+
+        self.app_canvas = tk.Canvas(list_container, borderwidth=0)
+        vscroll = ttk.Scrollbar(list_container, orient='vertical', command=self.app_canvas.yview)
+        self.app_canvas.configure(yscrollcommand=vscroll.set)
+        vscroll.pack(side='right', fill='y')
+        self.app_canvas.pack(side='left', fill='both', expand=True)
+
+        self.app_frame = ttk.Frame(self.app_canvas)
+        self.app_frame_id = self.app_canvas.create_window((0, 0), window=self.app_frame, anchor='nw')
+        self.app_frame.bind(
+            '<Configure>',
+            lambda e: self.app_canvas.configure(scrollregion=self.app_canvas.bbox('all'))
+        )
+        self.app_canvas.bind(
+            '<Configure>',
+            lambda e: self.app_canvas.itemconfig(self.app_frame_id, width=e.width)
+        )
 
         button_frame = ttk.Frame(self)
         button_frame.pack(fill='x')
