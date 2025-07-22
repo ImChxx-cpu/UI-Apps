@@ -4,6 +4,7 @@ from typing import List, Dict
 from datetime import datetime
 from dataclasses import dataclass
 
+# Intentar importar rich.progress si está disponible
 try:
     from rich.progress import Progress
     _RICH_AVAILABLE = True
@@ -25,6 +26,7 @@ class InstallResult:
     def duration(self) -> float:
         return (self.end - self.start).total_seconds()
 
+
 LOG_PATH = Path(__file__).resolve().parent.parent / 'logs' / 'install.log'
 
 
@@ -43,13 +45,12 @@ def log(message: str):
 
 
 def install_app(app: Dict[str, str], interactive: bool = False) -> InstallResult:
-    """Install a single application.
-
-    If ``interactive`` is ``True`` the winget process will inherit the
-    parent stdin/stdout allowing the user to provide input. In this mode
-    output is not captured for logging purposes.
     """
+    Instala una aplicación usando winget.
 
+    Si `interactive` es True, permite interacción en terminal y no captura salida.
+    De lo contrario, se usa instalación silenciosa y se capturan stdout/stderr.
+    """
     start = datetime.now()
     cmd = [
         'winget',
@@ -57,6 +58,7 @@ def install_app(app: Dict[str, str], interactive: bool = False) -> InstallResult
         '--id',
         app['id'],
     ]
+
     if not interactive:
         cmd.append('--silent')
     cmd.extend([
@@ -97,8 +99,10 @@ def install_apps(
     show_progress: bool = False,
     interactive: bool = False,
 ) -> List[InstallResult]:
-    """Install multiple apps optionally showing a progress bar."""
-
+    """
+    Instala múltiples aplicaciones. Si show_progress es True y rich está disponible,
+    se muestra una barra de progreso.
+    """
     results: List[InstallResult] = []
 
     if show_progress and _RICH_AVAILABLE:
