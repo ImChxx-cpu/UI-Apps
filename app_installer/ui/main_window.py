@@ -49,7 +49,7 @@ class AppInstallerUI(ctk.CTk):
         bottom_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
         bottom_frame.grid_columnconfigure(0, weight=1)
         bottom_frame.grid_rowconfigure(1, weight=1)
-        for r in range(2, 5):
+        for r in range(2, 4):
             bottom_frame.grid_rowconfigure(r, weight=0)
 
         button_frame = ctk.CTkFrame(bottom_frame)
@@ -66,12 +66,8 @@ class AppInstallerUI(ctk.CTk):
         self.current_pkg = ctk.CTkLabel(bottom_frame, text="")
         self.current_pkg.grid(row=2, column=0, sticky="ew", pady=(5, 0))
 
-        self.progress = ctk.CTkProgressBar(bottom_frame)
-        self.progress.set(0)
-        self.progress.grid(row=3, column=0, sticky="ew", pady=5)
-
         self.result_msg = ctk.CTkLabel(bottom_frame, text="")
-        self.result_msg.grid(row=4, column=0, sticky="ew")
+        self.result_msg.grid(row=3, column=0, sticky="ew", pady=5)
 
         self.refresh_app_list()
 
@@ -107,7 +103,6 @@ class AppInstallerUI(ctk.CTk):
         if not installer.is_winget_available():
             messagebox.showerror('Error', 'winget no está disponible')
             return
-        self.progress.set(0)
         self.current_pkg.configure(text="")
         self.result_msg.configure(text="")
         threading.Thread(target=self._install_thread, args=(apps,), daemon=True).start()
@@ -122,8 +117,6 @@ class AppInstallerUI(ctk.CTk):
             if result.returncode != 0:
                 error = True
             self.after(0, lambda r=result: self._log_result(r))
-            progress = idx / total
-            self.after(0, lambda p=progress: self.progress.set(p))
         msg = '✅ Instalación completada' if not error else '❌ Error durante la instalación'
         color = 'green' if not error else 'red'
         self.after(0, lambda: self.status.insert('end', 'Instalación finalizada\n'))
