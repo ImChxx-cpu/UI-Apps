@@ -12,9 +12,6 @@ from .settings_window import SettingsWindow
 CATALOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'apps_catalog.json'
 
 
-narrow = 40
-
-
 class AppInstallerUI(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -29,11 +26,8 @@ class AppInstallerUI(ctk.CTk):
     def create_widgets(self):
         self.search_var = tk.StringVar()
 
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=1)
-
         top_frame = ctk.CTkFrame(self)
-        top_frame.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
+        top_frame.pack(fill="x", padx=10, pady=10)
         top_frame.grid_columnconfigure(1, weight=1)
 
         ctk.CTkLabel(top_frame, text="Buscar:").grid(row=0, column=0, padx=(0, 5))
@@ -42,11 +36,11 @@ class AppInstallerUI(ctk.CTk):
         search_entry.bind("<KeyRelease>", lambda e: self.refresh_app_list())
 
         self.app_scroll = ctk.CTkScrollableFrame(self)
-        self.app_scroll.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+        self.app_scroll.pack(fill="both", expand=True, padx=10, pady=10)
         self.app_scroll.grid_columnconfigure(0, weight=1)
 
         bottom_frame = ctk.CTkFrame(self)
-        bottom_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+        bottom_frame.pack(fill="x", padx=10, pady=10)
         bottom_frame.grid_columnconfigure(0, weight=1)
         bottom_frame.grid_rowconfigure(1, weight=1)
         for r in range(2, 4):
@@ -109,7 +103,6 @@ class AppInstallerUI(ctk.CTk):
 
     def _install_thread(self, apps):
         self.after(0, lambda: self.status.insert('end', 'Iniciando instalación...\n'))
-        total = len(apps)
         error = False
         for idx, app in enumerate(apps, start=1):
             self.after(0, lambda n=app.get('name', app['id']): self.current_pkg.configure(text=f"Instalando {n}"))
