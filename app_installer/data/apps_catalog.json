@@ -1,63 +1,135 @@
 {
   "Navegadores": [
-    { "name": "Google Chrome", "id": "Google.Chrome"},
-    { "name": "Mozilla Firefox", "id": "Mozilla.Firefox"},
     { "name": "Brave Browser", "id": "Brave.Brave" },
-    { "name": "Opera", "id": "Opera.Opera"},
-    { "name": "Tor Browser", "id": "TorProject.TorBrowser"}
+    { "name": "Google Chrome", "id": "Google.Chrome" },
+    { "name": "Microsoft Edge", "id": "Microsoft.Edge" },
+    { "name": "Mozilla Firefox", "id": "Mozilla.Firefox" },
+    { "name": "Opera", "id": "Opera.Opera" },
+    { "name": "Opera GX", "id": "Opera.OperaGX" },
+    { "name": "Tor Browser", "id": "TorProject.TorBrowser" }
   ],
   "Desarrollo": [
+    { "name": "Android Studio", "id": "Google.AndroidStudio" },
+    { "name": "Docker Desktop", "id": "Docker.DockerDesktop" },
+    { "name": "Git", "id": "Git.Git" },
+    { "name": "GitHub CLI", "id": "GitHub.cli" },
+    { "name": "GitHub Desktop", "id": "GitHub.GitHubDesktop" },
+    { "name": "GitKraken", "id": "Axosoft.GitKraken" },
+    { "name": "Insomnia", "id": "Insomnia.Insomnia" },
+    { "name": "JDK Temurin (OpenJDK)", "id": "EclipseAdoptium.Temurin.17.JDK" },
+    { "name": "JetBrains Toolbox", "id": "JetBrains.Toolbox" },
+    { "name": "Node.js (LTS)", "id": "OpenJS.NodeJS.LTS" },
+    { "name": "Postman", "id": "Postman.Postman" },
+    { "name": "PowerShell 7", "id": "Microsoft.PowerShell" },
+    { "name": "Python 3", "id": "Python.Python.3" },
+    { "name": "SQLite", "id": "SQLite.sqlite" },
     { "name": "Visual Studio Code", "id": "Microsoft.VisualStudioCode" },
-    { "name": "Git", "id": "Git.Git"},
-    { "name": "Node.js (LTS)", "id": "OpenJS.NodeJS.LTS"},
-    { "name": "Python 3", "id": "Python.Python.3"},
-    { "name": "JetBrains Toolbox", "id": "JetBrains.Toolbox"},
-    { "name": "Windows Terminal", "id": "Microsoft.WindowsTerminal"},
-    { "name": "PowerShell 7", "id": "Microsoft.PowerShell"},
-    { "name": "SQLite", "id": "SQLite.sqlite"},
-    { "name": "JDK Temurin (OpenJDK)", "id": "EclipseAdoptium.Temurin.17.JDK"}
+    { "name": "Windows Terminal", "id": "Microsoft.WindowsTerminal" }
+  ],
+  "Bases de Datos": [
+    { "name": "DBeaver", "id": "dbeaver.dbeaver" },
+    { "name": "MongoDB Compass", "id": "MongoDB.Compass" },
+    { "name": "MySQL Workbench", "id": "Oracle.MySQLWorkbench" },
+    { "name": "pgAdmin 4", "id": "PostgreSQL.pgAdmin" },
+    { "name": "PostgreSQL", "id": "PostgreSQL.PostgreSQL" },
+    { "name": "Redis", "id": "Redis.Redis" },
+    { "name": "SQLite Browser", "id": "sqlitebrowser.sqlitebrowser" }
+  ],
+  "DevOps y Cloud": [
+    { "name": "AWS CLI", "id": "Amazon.AWSCLI" },
+    { "name": "Azure CLI", "id": "Microsoft.AzureCLI" },
+    { "name": "Kubernetes CLI", "id": "Kubernetes.kubectl" },
+    { "name": "Terraform", "id": "Hashicorp.Terraform" },
+    { "name": "Vagrant", "id": "Hashicorp.Vagrant" },
+    { "name": "VirtualBox", "id": "Oracle.VirtualBox" },
+    { "name": "VMware Workstation Pro", "id": "VMware.WorkstationPro" }
+  ],
+  "Diseño y UX": [
+    { "name": "Adobe Photoshop", "id": "Adobe.Photoshop" },
+    { "name": "Canva", "id": "Canva.Canva" },
+    { "name": "Figma", "id": "Figma.Figma" },
+    { "name": "GIMP", "id": "GIMP.GIMP" },
+    { "name": "Inkscape", "id": "Inkscape.Inkscape" },
+    { "name": "Paint.NET", "id": "dotPDN.PaintDotNet" }
   ],
   "Comunicación": [
     { "name": "Discord", "id": "Discord.Discord" },
+    { "name": "Microsoft Teams", "id": "Microsoft.Teams" },
+    { "name": "Slack", "id": "SlackTechnologies.Slack" },
     { "name": "Telegram Desktop", "id": "Telegram.TelegramDesktop" },
-    { "name": "Zoom", "id": "Zoom.Zoom" },
-    { "name": "Microsoft Teams", "id": "Microsoft.Teams" }
+    { "name": "WhatsApp", "id": "WhatsApp.WhatsApp" },
+    { "name": "Zoom", "id": "Zoom.Zoom" }
   ],
   "Gaming": [
+    { "name": "Battle.net", "id": "Blizzard.BattleNet" },
+    { "name": "DS4Windows", "id": "Ryochan7.DS4Windows" },
     { "name": "Epic Games Launcher", "id": "EpicGames.EpicGamesLauncher" },
-    { "name": "Steam", "id": "Valve.Steam" },
-    {"name": "Battle.net", "id": "Blizzard.BattleNet"},
+    { "name": "GeForce Experience", "id": "Nvidia.GeForceExperience" },
     { "name": "GeForce NOW", "id": "Nvidia.GeForceNow" },
+    { "name": "GOG Galaxy", "id": "GOG.Galaxy" },
+    { "name": "Origin", "id": "ElectronicArts.EADesktop" },
+    { "name": "Steam", "id": "Valve.Steam" },
     { "name": "SteelSeries GG", "id": "SteelSeries.GG" },
-    {"name": "DS4Windows", "id": "Ryochan7.DS4Windows"}
+    { "name": "Ubisoft Connect", "id": "Ubisoft.Connect" }
   ],
   "Productividad": [
-    {"name": "7-Zip", "id": "7zip.7zip" },
-    {"name": "Notepad++", "id": "Notepad++.Notepad++" },
-    {"name": "LibreOffice", "id": "TheDocumentFoundation.LibreOffice" },
+    { "name": "LibreOffice", "id": "TheDocumentFoundation.LibreOffice" },
+    { "name": "Microsoft Office", "id": "Microsoft.Office" },
+    { "name": "Notepad++", "id": "Notepad++.Notepad++" },
     { "name": "Notion", "id": "Notion.Notion" },
     { "name": "Notion Calendar", "id": "Notion.NotionCalendar" },
-    { "name": "WinRAR", "id": "RARLab.WinRAR" }
+    { "name": "Obsidian", "id": "Obsidian.Obsidian" },
+    { "name": "PDF24 Creator", "id": "geek-software.PDF24Creator" },
+    { "name": "Todoist", "id": "Doist.Todoist" },
+    { "name": "Trello", "id": "Atlassian.Trello" }
   ],
   "Multimedia": [
+    { "name": "Audacity", "id": "Audacity.Audacity" },
+    { "name": "HandBrake", "id": "HandBrake.HandBrake" },
+    { "name": "OBS Studio", "id": "OBSProject.OBSStudio" },
+    { "name": "Spotify", "id": "Spotify.Spotify" },
     { "name": "VLC Media Player", "id": "VideoLAN.VLC" },
-    {"name": "Spotify", "id": "Spotify.Spotify"},
-    {"name": "Audacity", "id": "Audacity.Audacity"}
+    { "name": "YouTube Music", "id": "Google.YouTubeMusic" }
   ],
-  "Seguridad": [
-    { "name": "Malwarebytes", "id": "Malwarebytes.Malwarebytes" }
+  "Seguridad y Privacidad": [
+    { "name": "Bitwarden", "id": "Bitwarden.Bitwarden" },
+    { "name": "Bitdefender Antivirus", "id": "Bitdefender.Bitdefender" },
+    { "name": "Malwarebytes", "id": "Malwarebytes.Malwarebytes" },
+    { "name": "NordVPN", "id": "NordVPN.NordVPN" },
+    { "name": "ProtonVPN", "id": "ProtonTechnologies.ProtonVPN" },
+    { "name": "VeraCrypt", "id": "IDRIX.VeraCrypt" }
+  ],
+  "Network y Conexión": [
+    { "name": "Advanced IP Scanner", "id": "Famatech.AdvancedIPScanner" },
+    { "name": "FileZilla", "id": "TimKosse.FileZilla.Client" },
+    { "name": "PuTTY", "id": "PuTTY.PuTTY" },
+    { "name": "TeamViewer", "id": "TeamViewer.TeamViewer" },
+    { "name": "WinSCP", "id": "WinSCP.WinSCP" },
+    { "name": "Wireshark", "id": "WiresharkFoundation.Wireshark" }
   ],
   "System Tools": [
-    {"name": "PowerToys", "id": "Microsoft.PowerToys"},
-    {"name": "Rufus", "id": "Rufus.Rufus"},
-    {"name": "CPU-Z", "id": "CPUID.CPU-Z"},
-    {"name": "HWMonitor", "id": "CPUID.HWMonitor"},
-    {"name": "CrystalDiskInfo", "id": "CrystalDewWorld.CrystalDiskInfo"},
-    {"name": "TreeSize Free", "id": "JAMSoftware.TreeSize.Free"},
-    {"name": "Everything", "id": "voidtools.Everything"},
-    {"name": "WinDirStat", "id": "WinDirStat.WinDirStat"},
-    {"name": "O&O ShutUp10++", "id": "OOSoftware.ShutUp10"},
-    {"name": "Autoruns", "id": "Microsoft.Sysinternals.Autoruns"},
-    {"name": "Process Explorer", "id": "Microsoft.Sysinternals.ProcessExplorer"}
+    { "name": "7-Zip", "id": "7zip.7zip" },
+    { "name": "Autoruns", "id": "Microsoft.Sysinternals.Autoruns" },
+    { "name": "CPU-Z", "id": "CPUID.CPU-Z" },
+    { "name": "CrystalDiskInfo", "id": "CrystalDewWorld.CrystalDiskInfo" },
+    { "name": "CrystalDiskMark", "id": "CrystalDewWorld.CrystalDiskMark" },
+    { "name": "Everything", "id": "voidtools.Everything" },
+    { "name": "GPU-Z", "id": "TechPowerUp.GPU-Z" },
+    { "name": "HWMonitor", "id": "CPUID.HWMonitor" },
+    { "name": "MSI Afterburner", "id": "Guru3D.Afterburner" },
+    { "name": "O&O ShutUp10++", "id": "OOSoftware.ShutUp10" },
+    { "name": "PowerToys", "id": "Microsoft.PowerToys" },
+    { "name": "Process Explorer", "id": "Microsoft.Sysinternals.ProcessExplorer" },
+    { "name": "Revo Uninstaller", "id": "RevoUninstaller.RevoUninstaller" },
+    { "name": "Rufus", "id": "Rufus.Rufus" },
+    { "name": "TreeSize Free", "id": "JAMSoftware.TreeSize.Free" },
+    { "name": "WinDirStat", "id": "WinDirStat.WinDirStat" },
+    { "name": "WinRAR", "id": "RARLab.WinRAR" }
+  ],
+  "Backup y Sincronización": [
+    { "name": "Dropbox", "id": "Dropbox.Dropbox" },
+    { "name": "Google Drive", "id": "Google.GoogleDrive" },
+    { "name": "OneDrive", "id": "Microsoft.OneDrive" },
+    { "name": "Syncthing", "id": "Syncthing.Syncthing" }
   ]
 }
