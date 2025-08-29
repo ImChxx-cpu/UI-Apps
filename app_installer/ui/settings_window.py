@@ -1,9 +1,19 @@
 import json
 import customtkinter as ctk
 from pathlib import Path
+import sys
+import os
 
-CATALOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'apps_catalog.json'
-DEFAULT_PATH = CATALOG_PATH.with_name('apps_catalog_default.json')
+def get_resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller"""
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+CATALOG_PATH = Path(get_resource_path('app_installer/data/apps_catalog.json'))
+DEFAULT_PATH = Path(get_resource_path('app_installer/data/apps_catalog_default.json'))
 
 
 class SettingsWindow(ctk.CTkToplevel):

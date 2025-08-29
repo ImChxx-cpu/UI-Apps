@@ -1,6 +1,8 @@
 import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox
+import sys
+import os
 
 import customtkinter as ctk
 from pathlib import Path
@@ -11,7 +13,16 @@ from typing import Dict, List
 from app_installer.core import installer, file_manager, scanner
 from .settings_window import SettingsWindow
 
-CATALOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'apps_catalog.json'
+def get_resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller"""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+CATALOG_PATH = Path(get_resource_path('app_installer/data/apps_catalog.json'))
 
 
 class AppInstallerUI(ctk.CTk):

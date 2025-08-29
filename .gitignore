@@ -31,3 +31,6 @@ Thumbs.db
 
 # Keep logs directory structure
 !app_installer/logs/.gitkeep
+
+# Claude Code settings
+.claude/
