@@ -1,5 +1,33 @@
+# Python
 __pycache__/
-logs/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Distribution / packaging
 dist/
 build/
+*.egg-info/
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Keep logs directory structure
 !app_installer/logs/.gitkeep
